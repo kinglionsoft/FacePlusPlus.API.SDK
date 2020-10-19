@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Xunit;
@@ -44,6 +45,17 @@ namespace SdkTest
             WriteJson(result);
         }
 
+        [Theory]
+        [InlineData(@"data\idcard-1.jpg")]
+        public async Task IdCardByBase64(string file)
+        {
+            var bytes = await File.ReadAllBytesAsync(file);
+            var base64 = Convert.ToBase64String(bytes);
+            var result = await FacePlusPlusHttpClient.IdCardByBase64Async(base64, default);
+            Assert.True(result.Success);
+
+            WriteJson(result);
+        }
 
         [Theory]
         [InlineData("https://ai.bdstatic.com/file/3C8C5B451BB4445697730217EC8648E3")]
