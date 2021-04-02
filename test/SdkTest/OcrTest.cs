@@ -68,5 +68,31 @@ namespace SdkTest
         }
 
         #endregion
+
+        #region DriverLicense
+
+        [Theory]
+        [InlineData("https://ai.bdstatic.com/file/079EFF6805BB459696EA65933FA1B51C")]
+        public async Task OcrDriverLicenseByUrl(string url)
+        {
+            var result = await FacePlusPlusHttpClient.DriverLicenseByUrlAsync(url, default);
+
+            WriteJson(result);
+        }
+
+        #endregion
+
+        #region VehicleLicense
+
+        [Theory]
+        [InlineData("https://ai.bdstatic.com/file/545B7A5A048B47E285B883E983EE32A0")]
+        public async Task OcrVehicleLicenseByUrl(string url)
+        {
+            var result = await FacePlusPlusHttpClient.VehicleLicenseByUrlAsync(url, default);
+
+            WriteJson(result);
+        }
+
+        #endregion
     }
 }

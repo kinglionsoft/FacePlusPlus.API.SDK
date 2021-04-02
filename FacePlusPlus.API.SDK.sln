@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{920CFAE0-160F-4189-A19C-AE5AA6DE5B0C}"
 	ProjectSection(SolutionItems) = preProject
-		Directory.build.props = Directory.build.props
+		Directory.Build.props = Directory.Build.props
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{80D8C877-ACB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{82C9C164-AAB6-47D0-B776-BEEFDA75780F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacePlusPlus.API.SDK", "src\FacePlusPlus.API.SDK\FacePlusPlus.API.SDK.csproj", "{3D2AC518-7037-4239-89A7-3A736A901776}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacePlusPlus.API.SDK", "src\FacePlusPlus.API.SDK\FacePlusPlus.API.SDK.csproj", "{3D2AC518-7037-4239-89A7-3A736A901776}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdkTest", "test\SdkTest\SdkTest.csproj", "{8E7AC98E-8DD0-4B94-957D-EC942077F61F}"
 EndProject

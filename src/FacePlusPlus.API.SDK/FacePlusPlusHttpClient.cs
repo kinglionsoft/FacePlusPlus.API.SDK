@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using FacePlusPlus.API.SDK.Models;
@@ -12,17 +13,22 @@ namespace FacePlusPlus.API.SDK
         private readonly HttpClient _httpClient;
         private readonly IOptionBalancer<FacePlusPlusSdkOptions> _optionBalancer;
         private readonly ILogger _logger;
-        private readonly IJsonSerializer _jsonSerializer;
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
 
         public FacePlusPlusHttpClient(HttpClient httpClient,
             IOptionBalancer<FacePlusPlusSdkOptions> optionBalancer,
             ILogger<FacePlusPlusHttpClient> logger,
-            IJsonSerializer jsonSerializer)
+            JsonSerializerOptions? jsonSerializerOptions = null)
         {
             _httpClient = httpClient;
             _optionBalancer = optionBalancer;
             _logger = logger;
-            _jsonSerializer = jsonSerializer;
+            _jsonSerializerOptions = jsonSerializerOptions ?? new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+                IgnoreNullValues = true
+            };
         }
 
         #region Helpers
@@ -38,9 +44,13 @@ namespace FacePlusPlus.API.SDK
             using (content)
             {
                 using var response = await _httpClient.PostAsync(url, content, cancellation);
-                var responseData = await response.Content.ReadAsByteArrayAsync();
-                var apiResult = _jsonSerializer.Deserialize<T>(new ReadOnlySpan<byte>(responseData));
-                if (apiResult.Success)
+#if DEBUG
+                var responseData = await response.Content.ReadAsStringAsync(cancellation);
+#else
+                var responseData = await response.Content.ReadAsByteArrayAsync(cancellation);
+#endif
+                var apiResult = Deserialize<T>(responseData);
+                if (apiResult!.Success)
                 {
                     return apiResult;
                 }
@@ -48,6 +58,12 @@ namespace FacePlusPlus.API.SDK
                 throw new FacePlusPlusException($"url: {url}, error_msg: {apiResult.ErrorMessage}");
             }
         }
+
+        protected virtual string Serialize(object data) => JsonSerializer.Serialize(data, _jsonSerializerOptions);
+
+        protected virtual T? Deserialize<T>(string json) => JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions);
+
+        protected virtual T? Deserialize<T>(byte[] json) => JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions);
 
         #endregion
     }

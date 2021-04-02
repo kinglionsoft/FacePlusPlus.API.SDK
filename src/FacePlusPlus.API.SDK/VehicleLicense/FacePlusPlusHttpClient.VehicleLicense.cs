@@ -11,15 +11,18 @@ namespace FacePlusPlus.API.SDK
     public partial class FacePlusPlusHttpClient
     {
         /// <summary>
-        /// refer https://console.faceplusplus.com.cn/documents/5671702
+        /// refer https://console.faceplusplus.com.cn/documents/5671706
         /// </summary>
         /// <param name="url">absolute url of the image</param>
         /// <returns></returns>
-        public Task<IdCardOcrResult> IdCardByUrlAsync(string url, CancellationToken cancellation)
+        public Task<VehicleLicenseOcrResult> VehicleLicenseByUrlAsync(string url,CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(url)) throw new ArgumentNullException(nameof(url));
 
-            return IdCardAsync(m => m.Add(new StringContent(url), "\"image_url\""), cancellation);
+            return VehicleLicenseAsync(m =>
+            {
+                m.Add(new StringContent(url), "\"image_url\"");
+            }, cancellation);
         }
 
         /// <summary>
@@ -27,13 +30,13 @@ namespace FacePlusPlus.API.SDK
         /// </summary>
         /// <param name="file">absolute path of the image</param>
         /// <returns></returns>
-        public async Task<IdCardOcrResult> IdCardByFileAsync(string file, CancellationToken cancellation)
+        public async Task<VehicleLicenseOcrResult> VehicleLicenseByFileAsync(string file, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(file)) throw new ArgumentNullException(nameof(file));
 
             Utils.EnsureImageFormat(file);
-            using var fs = File.OpenRead(file);
-            return await IdCardByStreamAsync(fs, cancellation);
+            await using var fs = File.OpenRead(file);
+            return await VehicleLicenseByStreamAsync(fs, cancellation);
         }
 
         /// <summary>
@@ -41,11 +44,14 @@ namespace FacePlusPlus.API.SDK
         /// </summary>
         /// <param name="fileStream">stream of the image</param>
         /// <returns></returns>
-        public async Task<IdCardOcrResult> IdCardByStreamAsync(Stream fileStream, CancellationToken cancellation)
+        public async Task<VehicleLicenseOcrResult> VehicleLicenseByStreamAsync(Stream fileStream, CancellationToken cancellation = default)
         {
             if (fileStream == null) throw new ArgumentNullException(nameof(fileStream));
 
-            return await IdCardAsync(m => m.Add(new StreamContent(fileStream), "\"image_file\"", "test.png"), cancellation);
+            return await VehicleLicenseAsync(m =>
+            {
+                m.Add(new StreamContent(fileStream), "\"image_file\"", "test.png");
+            }, cancellation);
         }
 
         /// <summary>
@@ -53,11 +59,11 @@ namespace FacePlusPlus.API.SDK
         /// </summary>
         /// <param name="data">bytes of the image</param>
         /// <returns></returns>
-        public async Task<IdCardOcrResult> IdCardByBytesAsync(byte[] data, CancellationToken cancellation)
+        public async Task<VehicleLicenseOcrResult> VehicleLicenseByBytesAsync(byte[] data, CancellationToken cancellation = default)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
-            using var memory = new MemoryStream(data);
-            return await IdCardByStreamAsync(memory, cancellation);
+            await using var memory = new MemoryStream(data);
+            return await VehicleLicenseByStreamAsync(memory, cancellation);
         }
 
         /// <summary>
@@ -65,18 +71,21 @@ namespace FacePlusPlus.API.SDK
         /// </summary>
         /// <param name="base64">Base64 of the image</param>
         /// <returns></returns>
-        public async Task<IdCardOcrResult> IdCardByBase64Async(string base64, CancellationToken cancellation)
+        public async Task<VehicleLicenseOcrResult> VehicleLicenseByBase64Async(string base64, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(base64)) throw new ArgumentNullException(nameof(base64));
 
-            return await IdCardAsync(m => m.Add(new StringContent(base64), "\"image_base64\""), cancellation);
+            return await VehicleLicenseAsync(m =>
+            {
+                m.Add(new StringContent(base64), "\"image_base64\"");
+            }, cancellation);
         }
 
-        protected virtual async Task<IdCardOcrResult> IdCardAsync(Action<MultipartFormDataContent> config, CancellationToken cancellation)
+        protected virtual async Task<VehicleLicenseOcrResult> VehicleLicenseAsync(Action<MultipartFormDataContent> config, CancellationToken cancellation = default)
         {
             var multi = new MultipartFormDataContent();
             config(multi);
-            var result = await PostAsync<IdCardOcrResult>("https://api-cn.faceplusplus.com/cardpp/v1/ocridcard", multi, cancellation);
+            var result = await PostAsync<VehicleLicenseOcrResult>("https://api-cn.faceplusplus.com/cardpp/v1/ocrvehiclelicense", multi, cancellation);
             return result;
         }
     }

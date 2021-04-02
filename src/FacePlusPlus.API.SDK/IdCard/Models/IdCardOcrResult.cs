@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿#pragma warning disable 8618
+
+using System.Text.Json.Serialization;
 
 namespace FacePlusPlus.API.SDK.Models
 {

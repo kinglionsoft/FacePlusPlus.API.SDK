@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
-using FacePlusPlus.API.SDK.Internal;
+using System.Text.Json;
 using FacePlusPlus.API.SDK.Internal.Load;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -45,7 +45,12 @@ namespace FacePlusPlus.API.SDK
                     p.WaitAndRetryAsync(firstOption.RetryDurations.Select(x => TimeSpan.FromMilliseconds(x))));
             }
 
-            services.AddSingleton<IJsonSerializer, JsonSerializer>();
+            services.AddSingleton(new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+                IgnoreNullValues = true
+            });
 
             return services;
         }
