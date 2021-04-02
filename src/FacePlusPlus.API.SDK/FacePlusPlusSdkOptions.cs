@@ -1,4 +1,5 @@
-﻿namespace FacePlusPlus.API.SDK
+﻿#pragma warning disable 8618
+namespace FacePlusPlus.API.SDK
 {
     public sealed class FacePlusPlusSdkOptions
     {

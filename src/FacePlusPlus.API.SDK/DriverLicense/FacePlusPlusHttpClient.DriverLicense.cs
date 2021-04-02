@@ -86,6 +86,10 @@ namespace FacePlusPlus.API.SDK
             var multi = new MultipartFormDataContent();
             config(multi);
             var result = await PostAsync<DriverLicenseOcrResult>("https://api-cn.faceplusplus.com/cardpp/v1/ocrdriverlicense", multi, cancellation);
+            foreach (var license in result.Cards)
+            {
+                license.FixValidDate();
+            }
             return result;
         }
     }
