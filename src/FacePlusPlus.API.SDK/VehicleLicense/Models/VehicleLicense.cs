@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 8618
 
+using System;
 using System.Text.Json.Serialization;
 
 namespace FacePlusPlus.API.SDK.Models
@@ -7,7 +8,7 @@ namespace FacePlusPlus.API.SDK.Models
     public class VehicleLicense
     {
         [JsonPropertyName("issue_date")]
-        public string IssueDate { get; set; }
+        public DateTime IssueDate { get; set; }
 
         [JsonPropertyName("vehicle_type")]
         public string VehicleType { get; set; }
@@ -37,7 +38,7 @@ namespace FacePlusPlus.API.SDK.Models
         public string Model { get; set; }
 
         [JsonPropertyName("register_date")]
-        public string RegisterDate { get; set; }
+        public DateTime RegisterDate { get; set; }
 
         [JsonPropertyName("type")]
         public int Type { get; set; }
