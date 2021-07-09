@@ -38,7 +38,7 @@ namespace FacePlusPlus.API.SDK.Models
         public string Model { get; set; }
 
         [JsonPropertyName("register_date")]
-        public DateTime RegisterDate { get; set; }
+        public string RegisterDate { get; set; }
 
         [JsonPropertyName("type")]
         public int Type { get; set; }

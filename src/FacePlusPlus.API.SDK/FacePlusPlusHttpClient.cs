@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,9 +62,32 @@ namespace FacePlusPlus.API.SDK
 
         protected virtual string Serialize(object data) => JsonSerializer.Serialize(data, _jsonSerializerOptions);
 
-        protected virtual T? Deserialize<T>(string json) => JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions);
+        protected virtual T? Deserialize<T>(string json)
+        {
+            try
+            {
+                return JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions);
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogError("返回序列化失败，Error={0}, Json={1}", ex.Message, json);
+                throw new FacePlusPlusException("返回序列化失败");
+            }
+        }
 
-        protected virtual T? Deserialize<T>(byte[] json) => JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions);
+        protected virtual T? Deserialize<T>(byte[] json)
+        {
+            try
+            {
+                return JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions);
+            }
+            catch (JsonException ex)
+            {
+                var text = Encoding.UTF8.GetString(json);
+                _logger.LogError("返回序列化失败，Error={0}, Json={1}", ex.Message, text);
+                throw new FacePlusPlusException("返回序列化失败");
+            }
+        }
 
         #endregion
     }

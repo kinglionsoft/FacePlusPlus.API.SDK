@@ -26,7 +26,7 @@ namespace FacePlusPlus.API.SDK
         }
 
         /// <summary>
-        /// refer https://console.faceplusplus.com.cn/documents/5671702
+        /// refer https://console.faceplusplus.com.cn/documents/5671706
         /// </summary>
         /// <param name="file">absolute path of the image</param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace FacePlusPlus.API.SDK
         }
 
         /// <summary>
-        /// refer https://console.faceplusplus.com.cn/documents/5671702
+        /// refer https://console.faceplusplus.com.cn/documents/5671706
         /// </summary>
         /// <param name="fileStream">stream of the image</param>
         /// <returns></returns>
@@ -55,7 +55,7 @@ namespace FacePlusPlus.API.SDK
         }
 
         /// <summary>
-        /// refer https://console.faceplusplus.com.cn/documents/5671702
+        /// refer https://console.faceplusplus.com.cn/documents/5671706
         /// </summary>
         /// <param name="data">bytes of the image</param>
         /// <returns></returns>
@@ -67,7 +67,7 @@ namespace FacePlusPlus.API.SDK
         }
 
         /// <summary>
-        /// refer https://console.faceplusplus.com.cn/documents/5671702
+        /// refer https://console.faceplusplus.com.cn/documents/5671706
         /// </summary>
         /// <param name="base64">Base64 of the image</param>
         /// <returns></returns>
