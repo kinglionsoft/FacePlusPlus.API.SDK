@@ -94,5 +94,60 @@ namespace SdkTest
         }
 
         #endregion
+
+        #region PlateNumber
+
+        [Theory]
+        [InlineData("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.guohuanjiancai.com%2Fgccxlpm%2Fimages%2F2934349b033b5bb561e1b2e231d3d539b600bcfc.jpg&refer=http%3A%2F%2Fwww.guohuanjiancai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1637831611&t=d498bc38a5062c8fea8892ca51a484c5")]
+        public async Task PlateNumberByUrlAsync(string url)
+        {
+            var result = await FacePlusPlusHttpClient.PlateNumberByUrlAsync(url, default);
+            WriteJson(result);
+        }
+
+        [Theory]
+        [InlineData(@"data\PlateNumber-2.jpg")]
+        public async Task PlateNumberByFileAsync(string file)
+        {
+            var result = await FacePlusPlusHttpClient.PlateNumberByFileAsync(file, default);
+            Assert.True(result.Success);
+            WriteJson(result);
+        }
+
+        [Theory]
+        [InlineData(@"data\PlateNumber-2.jpg")]
+        public async Task PlateNumberByStreamAsync(string file)
+        {
+            await using var fs = File.OpenRead(file);
+            var result = await FacePlusPlusHttpClient.PlateNumberByStreamAsync(fs, default);
+            Assert.True(result.Success);
+
+            WriteJson(result);
+        }
+
+        [Theory]
+        [InlineData(@"data\PlateNumber-2.jpg")]
+        public async Task PlateNumberByBytesAsync(string file)
+        {
+            var bytes = await File.ReadAllBytesAsync(file);
+            var result = await FacePlusPlusHttpClient.PlateNumberByBytesAsync(bytes, default);
+            Assert.True(result.Success);
+
+            WriteJson(result);
+        }
+
+        [Theory]
+        [InlineData(@"data\PlateNumber-2.jpg")]
+        public async Task PlateNumberByBase64Async(string file)
+        {
+            var bytes = await File.ReadAllBytesAsync(file);
+            var base64 = Convert.ToBase64String(bytes);
+            var result = await FacePlusPlusHttpClient.PlateNumberByBase64Async(base64, default);
+            Assert.True(result.Success);
+
+            WriteJson(result);
+        }
+
+        #endregion
     }
 }
