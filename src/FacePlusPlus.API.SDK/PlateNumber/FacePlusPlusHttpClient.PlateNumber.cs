@@ -79,7 +79,5 @@ namespace FacePlusPlus.API.SDK
             var result = await PostAsync<PlateNumberOcrResult>("https://api-cn.faceplusplus.com/imagepp/v1/licenseplate", multi, cancellation);
             return result;
         }
-
-
     }
 }
