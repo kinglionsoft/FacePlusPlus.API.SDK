@@ -11,19 +11,6 @@ namespace FacePlusPlus.API.SDK
 {
     public partial class FacePlusPlusHttpClient
     {
-        public readonly Dictionary<int, string> ColorDic = new Dictionary<int, string>
-        {
-            {0,"blue"},
-            {1,"yellow"},
-            {2,"black"},
-            {3,"white"},
-            {4,"green"},
-            {5,"green"},
-            {6,"green"},
-            {7,"missing"},
-            {8,"invalid"},
-        };
-
         /// <summary>
         /// refer https://console.faceplusplus.com.cn/documents/33915254
         /// </summary>
@@ -91,10 +78,6 @@ namespace FacePlusPlus.API.SDK
             var multi = new MultipartFormDataContent();
             config(multi);
             var result = await PostAsync<PlateNumberOcrResult>("https://api-cn.faceplusplus.com/imagepp/v1/licenseplate", multi, cancellation);
-            foreach (var item in result.Results)
-            {
-                item.ColorName = ColorDic[item.ColorNumber] ?? string.Empty;
-            }
             return result;
         }
     }
