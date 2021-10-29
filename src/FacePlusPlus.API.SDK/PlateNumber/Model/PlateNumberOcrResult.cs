@@ -12,7 +12,9 @@ namespace FacePlusPlus.API.SDK.Models
         public class Result
         {
             [JsonPropertyName("color")]
-            public int Color { get; set; }
+            public int ColorNumber { get; set; }
+
+            public string ColorName { get; set; }
 
             [JsonPropertyName("license_plate_number")]
             public string LicensePlateNumber { get; set; }

@@ -137,7 +137,7 @@ namespace SdkTest
         }
 
         [Theory]
-        [InlineData(@"data\PlateNumber-2.jpg")]
+        [InlineData(@"data\PlateNumber-4.jpg")]
         public async Task PlateNumberByBase64Async(string file)
         {
             var bytes = await File.ReadAllBytesAsync(file);
