@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -79,7 +80,5 @@ namespace FacePlusPlus.API.SDK
             var result = await PostAsync<PlateNumberOcrResult>("https://api-cn.faceplusplus.com/imagepp/v1/licenseplate", multi, cancellation);
             return result;
         }
-
-
     }
 }
